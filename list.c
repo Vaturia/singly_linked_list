@@ -76,13 +76,19 @@ int8_t insertItem(List *list, TYPE_LIST data, int32_t num_node, char position)
     if(!newNode){return -1;};
     for(; (i != num_node - 1) && buf != NULL; buf = buf->_next_node, ++i);
 
-    if(buf == NULL){return -1;};
+    if(buf == NULL)
+    {
+        free(newNode);
+        return -1;
+    };
 
     switch (position)
     {
         case 'a': buf = buf->_next_node; break;
         case 'b': break;
-        default: return -1;
+        default: 
+            free(newNode);
+            return -1;
     }
 
     newNode->data = data;
