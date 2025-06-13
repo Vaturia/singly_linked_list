@@ -64,6 +64,34 @@ Node* findItem(List *list, TYPE_LIST data)
 
     return 0x00;
 }
+int8_t insertItem(List *list, TYPE_LIST data, int32_t num_node, char position)
+{
+    if(!list){return -1;};
+
+    int32_t i = 0;
+    Node *buf = list->_head, *newNode = 0x00;
+
+    newNode = calloc(1, sizeof(Node));
+
+    if(!newNode){return -1;};
+    for(; (i != num_node - 1) && buf != NULL; buf = buf->_next_node, ++i);
+
+    if(buf == NULL){return -1;};
+
+    switch (position)
+    {
+        case 'a': buf = buf->_next_node; break;
+        case 'b': break;
+        default: return -1;
+    }
+
+    newNode->data = data;
+    newNode->_next_node = buf->_next_node;
+    buf->_next_node = newNode;
+
+    return 0;
+
+}
 int main()
 {
     List *list = initializationList();
@@ -79,6 +107,9 @@ int main()
 
         
     }
+    insertItem(list, 37, 7, 'a');
+    insertItem(list, 74, 9, 'b');
+
     appendToBeginItem(list, 66);
     i = 0;
     printf("\n");
